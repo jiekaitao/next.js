@@ -214,9 +214,14 @@ describe('basePath', () => {
     it('should respect basePath in amphtml link rel', async () => {
       const html = await renderViaHTTP(next.url, `${basePath}/amp-hybrid`)
       const $ = cheerio.load(html)
-      const expectedAmpHtmlUrl = isDev
-        ? `${basePath}/amp-hybrid?amp=1`
-        : `${basePath}/amp-hybrid.amp`
+      // const expectedAmpHtmlUrl = isDev
+      //   ? `${basePath}/amp-hybrid?amp=1`
+      //   : `${basePath}/amp-hybrid.amp`
+
+      
+      const expectedAmpHtmlUrl = `${basePath}/amp-hybrid.amp`
+      // always enforce .amp extension if the developer really requires it, 
+      // but Next would still serve the correct AMP-ified version
       expect($('link[rel=amphtml]').first().attr('href')).toBe(
         expectedAmpHtmlUrl
       )
